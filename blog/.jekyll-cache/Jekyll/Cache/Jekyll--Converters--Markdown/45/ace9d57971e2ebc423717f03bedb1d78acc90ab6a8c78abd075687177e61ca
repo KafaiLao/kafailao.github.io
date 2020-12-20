@@ -1,0 +1,148 @@
+I"<h1 id="使用jekyll生成個人網誌--部署到github-pages">使用Jekyll生成個人網誌 + 部署到Github pages</h1>
+
+<h2 id="背景">背景</h2>
+
+<p>較常見使用的靜態網頁生成器有Hugo (Go), Jekyll (Ruby), Pelican (Python), hexo(JavaScript)</p>
+
+<p>基本流程就是使用者可以Markdown編輯文件, 最由生成器生成html</p>
+
+<p>Jekyll</p>
+
+<blockquote>
+  <p>靜態網頁 vs 動態網頁</p>
+
+  <p>靜態網頁沒有後台數據庫, 不含在服務器端運行的程序</p>
+</blockquote>
+
+<h2 id="環境架設">環境架設</h2>
+
+<p>以下命俴<code class="language-plaintext highlighter-rouge">Ubuntu</code></p>
+
+<ol>
+  <li>安裝Git</li>
+</ol>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>git <span class="nt">-y</span>
+</code></pre></div></div>
+
+<ol>
+  <li>設置Github</li>
+</ol>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config <span class="nt">--global</span> user.name <span class="s2">"kafailao"</span>
+git config <span class="nt">--global</span> user.email <span class="s2">"kflao.umac@gmail.com"</span>
+git config <span class="nt">--list</span>
+</code></pre></div></div>
+
+<ol>
+  <li>登入Github網站創建repo並以<code class="language-plaintext highlighter-rouge">username.github.io</code>命名, 詳細可見<a href="https://guides.github.com/features/pages/">Github的教學</a></li>
+</ol>
+
+<p><img src="https://guides.github.com/features/pages/create-new-repo-screen.png" alt="new-repo-screen" /></p>
+
+<ol>
+  <li>將Github pages的repo覆制到本地倉庫</li>
+</ol>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~
+<span class="nb">mkdir </span>github
+<span class="nb">cd </span>github
+git clone https://github.com/kafailao/kafailao.github.io.git
+</code></pre></div></div>
+
+<ol>
+  <li>安裝Jekyll</li>
+</ol>
+
+<ul>
+  <li>安裝Ruby及其它必需的包</li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get <span class="nb">install </span>ruby-full build-essential zlib1g-dev
+</code></pre></div></div>
+
+<ul>
+  <li>根據官方建議, 應將gem包安裝到每個使用者自己的home directory下, 避免以root user安裝gem包, 因此需進行如下的環境變量配置</li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s1">'# Install Ruby Gems to ~/gems'</span> <span class="o">&gt;&gt;</span> ~/.bashrc
+<span class="nb">echo</span> <span class="s1">'export GEM_HOME="$HOME/gems"'</span> <span class="o">&gt;&gt;</span> ~/.bashrc
+<span class="nb">echo</span> <span class="s1">'export PATH="$HOME/gems/bin:$PATH"'</span> <span class="o">&gt;&gt;</span> ~/.bashrc
+<span class="nb">source</span> ~/.bashrc
+</code></pre></div></div>
+
+<ul>
+  <li>安裝Jekyll及Bundler</li>
+</ul>
+
+<pre><code class="language-Shell">gem install jekyll bundler
+</code></pre>
+
+<h2 id="網誌部署">網誌部署</h2>
+
+<p>https://jekyllrb.com/docs/github-pages/</p>
+
+<pre><code class="language-Shell">cd ~/github/kafailao.github.io.git
+gedit Gemfile #或使用 "bundle init"
+</code></pre>
+
+<ul>
+  <li>Create/replace the contents of your <code class="language-plaintext highlighter-rouge">Gemfile</code> with the following</li>
+</ul>
+
+<pre><code class="language-Shell">source 'https://rubygems.org'
+gem 'github-pages', group: :jekyll_plugins
+gem "minimal-mistakes-jekyll", group: :jekyll_plugins
+</code></pre>
+
+<ul>
+  <li>Fetch and update bundled gems by running the following <a href="https://bundler.io/">Bundler</a> command:</li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle <span class="c">#安裝Gemfile裡的package</span>
+bundle <span class="nb">exec </span>jekyll new blog <span class="c">#create new site</span>
+<span class="nb">cd </span>blog
+bundle 
+bundle <span class="nb">exec </span>jekyll serve
+</code></pre></div></div>
+
+<ul>
+  <li>訪問http://127.0.0.1:4000/即可看到部署好的網誌</li>
+</ul>
+
+<p><img src="C:\Users\tsuba\AppData\Roaming\Typora\typora-user-images\image-20201220171929654.png" alt="image-20201220171929654" /></p>
+
+<ul>
+  <li>Install Jekyll locally via the command line, create a new boilerplate website using <code class="language-plaintext highlighter-rouge">jekyll new</code>, build it locally with <code class="language-plaintext highlighter-rouge">jekyll build</code>, and then serve it. (The <a href="http://jekyllrb.com/">Jekyll website</a> shows this workflow.)</li>
+  <li>Clone a starting point to your local machine, install Jekyll locally via the command line, make updates to your website, build it locally, and then serve it.</li>
+  <li>Fork a starting point, make changes, and then serve it.</li>
+</ul>
+
+<ol>
+  <li>到這一步就可以用Jekyll去生成網頁了, 但我們不用從頭做起, 有很多現成的</li>
+  <li></li>
+  <li>
+    <ul>
+      <li>https://github.com/poole/lanyon</li>
+      <li></li>
+    </ul>
+  </li>
+  <li></li>
+</ol>
+
+<ul>
+  <li>upload the <em>.md</em> file under the folder post</li>
+</ul>
+
+<pre><code class="language-Shell">source "https://rubygems.org"
+gem "github-pages", group: :jekyll_plugins
+</code></pre>
+
+<p>http://jmcglone.com/guides/github-pages/</p>
+
+<p>https://guides.github.com/features/pages/</p>
+
+<p>https://jekyllthemes.io/theme/minimal-mistakes</p>
+
+<p>https://jamstack.org/generators/</p>
+:ET
