@@ -12,6 +12,8 @@ excerpt_separator: <!--more-->
 測試用
 <!--more-->
 
+{% include toc %}
+
 ## 背景
 
 較常見使用的靜態網頁生成器有Hugo (Go)，Jekyll (Ruby)，Pelican (Python)，hexo(JavaScript)
